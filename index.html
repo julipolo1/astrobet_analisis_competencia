@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark Publicitario & Análisis Competitivo Meta Ads | Mercado Ecuador</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js para visualización interactiva -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              primary: '#6366f1',
+              secondary: '#ec4899',
+              accent: '#38bdf8',
+              dark: '#0B0F19',
+              card: 'rgba(17, 24, 39, 0.75)',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'gradient': 'gradient 8s ease infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            gradient: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Glassmorphism y utilidades de estilo */
+    .glass-card {
+      background: rgba(17, 24, 39, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15);
+    }
+
+    .badge-glow {
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0F19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #374151;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6366f1;
+    }
+
+    /* Modal Image Zoom */
+    .modal-active {
+      display: flex !important;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  
+    .gallery-card{display:block;width:100%;border:1px solid rgba(148,163,184,.13);background:rgba(17,24,39,.72);cursor:zoom-in;transition:transform .25s,border-color .25s,box-shadow .25s}
+    .gallery-card:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.48);box-shadow:0 16px 40px rgba(0,0,0,.28)}
+    .gallery-frame img{object-position:top center}
+    .gallery-shade{background:linear-gradient(180deg,rgba(0,0,0,.12),transparent 38%,rgba(0,0,0,.35));pointer-events:none}
+    .gallery-badge{position:absolute;top:10px;left:10px;padding:5px 9px;border-radius:999px;background:rgba(7,10,18,.82);backdrop-filter:blur(8px);font-size:10px;font-weight:700;border:1px solid rgba(255,255,255,.12);color:#fff}
+    .gallery-badge.orange{color:#fdba74}.gallery-badge.yellow{color:#fde047}.gallery-badge.emerald{color:#6ee7b7}.gallery-badge.sky{color:#7dd3fc}.gallery-badge.blue{color:#93c5fd}
+    .gallery-zoom{position:absolute;right:10px;bottom:10px;padding:6px 9px;border-radius:8px;background:rgba(0,0,0,.72);font-size:10px;color:#fff;opacity:0;transform:translateY(3px);transition:.2s}
+    .gallery-card:hover .gallery-zoom,.gallery-card:focus-visible .gallery-zoom{opacity:1;transform:translateY(0)}
+    .supplement-index{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:rgba(99,102,241,.15);border:1px solid rgba(129,140,248,.25);color:#a5b4fc;font-size:11px;font-weight:800}
+    .evidence-lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;padding:24px 16px 56px;background:rgba(3,5,10,.94);backdrop-filter:blur(12px);overflow-y:auto;overscroll-behavior:contain}
+    .evidence-lightbox.open{display:flex}
+    .evidence-lightbox img{display:block;width:auto;height:auto;max-width:min(1100px,96vw);max-height:none;margin:32px auto 0;border-radius:12px;box-shadow:0 24px 90px #000}
+    .evidence-lightbox .lightbox-head{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 32px));z-index:2;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(12,16,27,.92);backdrop-filter:blur(12px);color:#e5e7eb}
+    .evidence-lightbox .lightbox-head small{display:block;color:#9ca3af;font-size:10px;margin-top:2px}
+    .evidence-lightbox button{width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:10px;background:#ffffff0d;color:white;font-size:21px;cursor:pointer}
+    @media(max-width:640px){.gallery-frame{height:13rem}.evidence-lightbox img{max-width:100%;margin-top:44px}.evidence-lightbox .lightbox-head{padding:8px 10px}}
+
+    .gpt-additions{margin-top:13px;padding:12px 14px;border-radius:12px;background:rgba(99,102,241,.065);border:1px solid rgba(129,140,248,.16)}
+    .gpt-additions>span{font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#a5b4fc}
+    .gpt-additions ul,.gpt-market-list{list-style:none;padding:0;margin:7px 0 0;display:grid;gap:6px}
+    .gpt-additions li,.gpt-market-list li{position:relative;padding-left:14px;color:#cbd2df;font-size:11px;line-height:1.55}
+    .gpt-additions li:before,.gpt-market-list li:before{content:'';position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:#a5b4fc}
+    .finding-card{padding:22px 23px;border-radius:17px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);transition:transform .25s,border-color .25s}
+    .finding-card:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.42)}
+    .finding-card>span{font-size:9px;color:#a5b4fc;font-weight:800;letter-spacing:.16em}
+    .finding-card h3{font-size:18px;font-weight:800;color:#fff;margin:9px 0 7px}
+    .finding-card p,.finding-note p{font-size:12px;line-height:1.7;color:#aeb7c7;margin:0}
+    .mix-panel{padding:21px;border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(4,8,16,.35)}
+    .mix-item{padding:14px;border-radius:12px;background:rgba(255,255,255,.035)}
+    .mix-item>div:first-child{display:flex;justify-content:space-between;align-items:center}.mix-item span{font-size:12px;color:#e5e7eb;font-weight:700}.mix-item strong{font-size:12px;color:#fda4af}.mix-item small{display:block;color:#8993a5;font-size:10px;margin-top:2px}
+    .mix-track{height:5px;margin-top:10px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}.mix-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#ec4899,#38bdf8)}
+    .finding-note{padding:15px 17px;border-radius:12px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.15)}
+    .finding-note strong{font-size:11px;color:#7dd3fc;letter-spacing:.08em;text-transform:uppercase}.finding-note p{margin-top:5px}
+    .finding-note.amber{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.18)}.finding-note.amber strong{color:#fcd34d}
+    .gpt-hero-layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;align-items:center;gap:35px}
+    .gpt-hero-copy{width:100%}
+    .gpt-hero-orbit{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:335px;height:335px;border:1px solid rgba(255,255,255,.11);border-radius:50%;pointer-events:none}
+    .gpt-hero-orbit:before,.gpt-hero-orbit:after{content:'';position:absolute;inset:27px;border:1px solid rgba(255,255,255,.08);border-radius:50%}.gpt-hero-orbit:after{inset:61px}
+    .gpt-hero-orbit span{position:absolute;top:40px;left:55px;width:9px;height:9px;background:#fb923c;border-radius:50%;box-shadow:0 0 20px #fb923c}.gpt-hero-orbit span:nth-child(2){top:auto;left:auto;right:55px;bottom:42px;background:#38bdf8;box-shadow:0 0 20px #38bdf8}.gpt-hero-orbit span:nth-child(3){top:50%;left:50%;background:#ec4899;box-shadow:0 0 20px #ec4899}
+    .gpt-hero-card{position:relative;z-index:1;width:100%;padding:23px;border:1px solid rgba(255,255,255,.17);border-radius:23px;background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));box-shadow:0 22px 55px rgba(0,0,0,.35);backdrop-filter:blur(14px);transform:rotate(-2deg);animation:gptFloat 6s ease-in-out infinite}
+    .gpt-hero-card-top,.gpt-hero-bottom{display:flex;justify-content:space-between;align-items:center;color:#aeb8c8;font-size:9px;text-transform:uppercase;letter-spacing:.1em}.gpt-hero-title{font-size:25px;line-height:1.05;font-weight:850;margin:22px 0 8px;color:white;letter-spacing:-.04em}.gpt-hero-title em{font-style:normal;color:#fb923c}.gpt-hero-sub{font-size:11px;color:#aeb8c8}
+    .gpt-signal{height:66px;display:flex;align-items:end;gap:7px;margin:20px 0 15px}.gpt-signal i{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#fb923c,rgba(251,75,77,.15));animation:gptBars 2.5s ease-in-out infinite alternate}.gpt-signal i:nth-child(1){height:35%}.gpt-signal i:nth-child(2){height:52%;animation-delay:.2s}.gpt-signal i:nth-child(3){height:43%;animation-delay:.4s}.gpt-signal i:nth-child(4){height:75%;animation-delay:.6s}.gpt-signal i:nth-child(5){height:61%;animation-delay:.8s}.gpt-signal i:nth-child(6){height:92%;animation-delay:1s}.gpt-signal i:nth-child(7){height:70%;animation-delay:1.2s}
+    .gpt-hero-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:12px;font-size:9px}.gpt-hero-bottom strong{color:#fcd34d;font-size:9px}
+    @keyframes gptFloat{0%,100%{translate:0 0;rotate:-2deg}50%{translate:0 -7px;rotate:-1deg}}@keyframes gptBars{from{filter:brightness(.75)}to{filter:brightness(1.25)}}
+    @media(max-width:1023px){.gpt-hero-layout{display:block}.gpt-hero-copy{margin-left:auto;margin-right:auto}.gpt-hero-orbit,.gpt-hero-card{display:none}}
+</style>
+</head>
+<body class="bg-[#0B0F19] text-gray-200 antialiased selection:bg-indigo-500 selection:text-white relative overflow-x-hidden min-h-screen">
+
+  <!-- Luces de fondo ambientales / Glow Effects -->
+  <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none -z-10 animate-pulse-slow"></div>
+  <div class="fixed top-1/3 right-10 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[150px] pointer-events-none -z-10 animate-float"></div>
+  <div class="fixed bottom-10 left-1/3 w-[550px] h-[550px] bg-sky-600/10 rounded-full blur-[160px] pointer-events-none -z-10"></div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="sticky top-0 z-40 border-b border-gray-800/80 bg-[#0B0F19]/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-pink-500 to-sky-400 p-[2px] transition-transform duration-300 group-hover:scale-110 shadow-lg shadow-indigo-500/20">
+          <div class="w-full h-full bg-[#0B0F19] rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-chart-line text-indigo-400 group-hover:text-pink-400 transition-colors"></i>
+          </div>
+        </div>
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 block">Reporte Estratégico</span>
+          <h1 class="text-lg font-bold font-display tracking-tight text-white flex items-center gap-2">
+            Ad Intelligence <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-mono">ECUADOR</span>
+          </h1>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center space-x-1">
+        <a href="#resumen" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-all">Resumen</a>
+        <a href="#competidores" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-all">Competidores</a>
+        <a href="#matriz" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-all">Matriz</a>
+        <a href="#hallazgos" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-all">Hallazgos</a>
+        <a href="#evidencias" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-all">Evidencias</a>
+        <a href="#recomendaciones" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-lg transition-all">Acciones</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          Meta Ad Library 2026
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto gpt-hero-layout">
+    <div class="text-center lg:text-left max-w-3xl lg:mx-0 lg:max-w-2xl space-y-5 gpt-hero-copy">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-indigo-500/10 to-pink-500/10 border border-indigo-500/30 text-indigo-300">
+        <i class="fa-brands fa-meta text-indigo-400"></i> Análisis Forense de Creativos & Estrategia de Pauta
+      </div>
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-display tracking-tight text-white leading-tight">
+        ¿Qué hace la competencia <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-pink-400 to-sky-400">frente a nuestra pauta?</span>
+      </h2>
+      <p class="text-base sm:text-lg text-gray-400 leading-relaxed font-normal">
+        Auditoría comparativa basada en capturas directas de la <span class="text-gray-200 font-semibold">Biblioteca de Anuncios de Meta</span>. Evaluación de tácticas, formatos de video vs. estáticos, palancas de conversión y optimización de presupuesto en Ecuador.
+      </p>
+
+      <!-- Disclaimer Metodológico Importante -->
+      <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 text-left flex items-start gap-3 mt-6">
+        <div class="p-2 bg-amber-500/20 text-amber-400 rounded-lg mt-0.5">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-amber-300">Nota Metodológica sobre CTRs, CPCs y Métricas Privadas</h4>
+          <p class="text-xs text-amber-200/80 mt-1 leading-relaxed">
+            La Biblioteca de Anuncios de Meta <strong>no expone CTRs, CPCs ni costos de adquisición internos</strong> de ningún anunciante. Este informe se enfoca en evidencia 100% verídica: <strong>volumen de anuncios activos, estilos de copywriting, tácticas visuales (UGC vs. IA 3D), segmentación por modismos y mecanismos de conversión directa (Web vs WhatsApp B2B)</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  <div class="gpt-hero-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+    <aside class="gpt-hero-card" aria-label="Competitive intelligence EC 2026">
+      <div class="gpt-hero-card-top"><span>Competitive intelligence</span><span>EC / 2026</span></div>
+      <div class="gpt-hero-title">Observar.<br>Comparar.<br><em>Actuar.</em></div>
+      <div class="gpt-hero-sub">Qué hacen los competidores y qué puede aprender AstroBet.</div>
+      <div class="gpt-signal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="gpt-hero-bottom"><span>Meta Ads Library</span><strong>Ecuador · 2026</strong></div>
+    </aside></section>
+
+  <!-- Quick Stats Counter Grid -->
+  <section id="resumen" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+      
+      <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+        <div class="flex items-center justify-between text-gray-400 mb-3">
+          <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Total Competidores</span>
+          <i class="fa-solid fa-chess-knight text-indigo-400 group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div class="text-3xl sm:text-4xl font-extrabold text-white font-display">4 Clave</div>
+        <div class="text-xs text-emerald-400 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-check"></i> Betano, Ecuabet, Latribet, Betcris
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+        <div class="flex items-center justify-between text-gray-400 mb-3">
+          <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Formato Dominante</span>
+          <i class="fa-solid fa-video text-pink-400 group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div class="text-3xl sm:text-4xl font-extrabold text-white font-display">UGC 9:16</div>
+        <div class="text-xs text-indigo-300 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-mobile-screen"></i> Reels & Stories prioritarios
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+        <div class="flex items-center justify-between text-gray-400 mb-3">
+          <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Táctica Disruptiva</span>
+          <i class="fa-brands fa-whatsapp text-emerald-400 group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div class="text-3xl sm:text-4xl font-extrabold text-white font-display">B2B Red</div>
+        <div class="text-xs text-emerald-400 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-store"></i> Captación directa de agentes locales
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+        <div class="flex items-center justify-between text-gray-400 mb-3">
+          <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Nuestra Brecha</span>
+          <i class="fa-solid fa-bullseye text-amber-400 group-hover:scale-125 transition-transform"></i>
+        </div>
+        <div class="text-3xl sm:text-4xl font-extrabold text-white font-display">Video & Frecuencia</div>
+        <div class="text-xs text-amber-300 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-arrow-trend-up"></i> Necesidad de pasar de estático a UGC
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Charts Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Chart 1: Formatos Creativos -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="text-lg font-bold text-white font-display">Distribución de Formatos Creativos</h3>
+            <p class="text-xs text-gray-400">Proporción estimada de Video vs. Estáticos en pauta activa</p>
+          </div>
+          <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Auditoría Visual</span>
+        </div>
+        <div class="relative h-64 w-full">
+          <canvas id="chartFormatos"></canvas>
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-800 text-xs text-gray-400 flex items-center justify-between">
+          <span><i class="fa-solid fa-circle text-pink-500 text-[10px] mr-1"></i> Betano lidera en video vertical</span>
+          <span><i class="fa-solid fa-circle text-sky-400 text-[10px] mr-1"></i> Ecuabet domina estáticos 3D</span>
+        </div>
+      </div>
+
+      <!-- Chart 2: Mecánicas de Gancho -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="text-lg font-bold text-white font-display">Palancas de Oferta & Ganchos</h3>
+            <p class="text-xs text-gray-400">Intensidad de mensajes utilizados en los copies de Meta</p>
+          </div>
+          <span class="text-xs bg-pink-500/20 text-pink-300 border border-pink-500/30 px-3 py-1 rounded-full">Copy Strategy</span>
+        </div>
+        <div class="relative h-64 w-full">
+          <canvas id="chartGanchos"></canvas>
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-800 text-xs text-gray-400 flex items-center justify-between">
+          <span><i class="fa-solid fa-fire text-amber-400 mr-1"></i> Multiplicadores directos (ej: pon $10 juega $40)</span>
+          <span><i class="fa-solid fa-gift text-emerald-400 mr-1"></i> Giros gratis de casino</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Competitors Deep Dive Cards Section -->
+  <section id="competidores" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <div>
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-400">Fichas de Inteligencia</span>
+        <h2 class="text-3xl font-extrabold text-white font-display mt-1">Desglose Detallado por Competidor</h2>
+      </div>
+      <div class="flex flex-wrap gap-2 text-xs">
+        <button onclick="filterCards('all', this)" class="filter-btn active px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium transition-all shadow-md">Todos</button>
+        <button onclick="filterCards('betano', this)" class="filter-btn px-4 py-2 rounded-xl bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white font-medium transition-all">Betano</button>
+        <button onclick="filterCards('ecuabet', this)" class="filter-btn px-4 py-2 rounded-xl bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white font-medium transition-all">Ecuabet</button>
+        <button onclick="filterCards('latribet', this)" class="filter-btn px-4 py-2 rounded-xl bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white font-medium transition-all">Latribet</button>
+        <button onclick="filterCards('betcris', this)" class="filter-btn px-4 py-2 rounded-xl bg-gray-800/80 text-gray-300 hover:bg-gray-700 hover:text-white font-medium transition-all">Betcris</button>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="competitor-grid">
+
+      <!-- 1. BETANO ECUADOR -->
+      <div class="competitor-card glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-2 group" data-category="betano">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-all"></div>
+        
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 rounded-full bg-orange-500"></span>
+            <h3 class="text-xl font-bold text-white font-display">Betano Ecuador</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/30 font-medium">Líder Audiovisual</span>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl mb-6 border border-gray-800 group-hover:border-orange-500/30 transition-all cursor-pointer" onclick="openModal('imagenes_comprimidas_webp/betano_ecuador-compressed.webp', 'Betano Ecuador - Biblioteca de Anuncios')">
+          <img src="imagenes_comprimidas_webp/betano_ecuador-compressed.webp" alt="Betano Ecuador Meta Ads" class="w-full h-56 object-cover object-top transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-80"></div>
+          <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+            <span class="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1">
+              <i class="fa-solid fa-magnifying-glass-plus text-orange-400"></i> Click para zoom
+            </span>
+            <span class="text-gray-300 bg-black/60 px-2 py-1 rounded-lg">~80 anuncios activos</span>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-xs uppercase tracking-wider font-bold text-orange-400 mb-2 flex items-center gap-1.5">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Estrategia Creativa & Visual
+            </h4>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              Prioridad al <strong>formato video vertical (9:16) tipo UGC</strong>. Creación de marca mediante "Brand Armor": creadores que usan consistentemente buzos y camisetas polo corporativas naranja/negro. Demos en pantalla de funciones de la app móvil (ej: <em>Bet Builder</em>).
+            </p><div class="gpt-additions"><span>Aporte complementario · GPT</span><ul><li>Tutoriales y grabaciones de pantalla explican funciones del producto.</li><li>Los anuncios aparecen en pulsos asociados a fechas deportivas, según el análisis GPT.</li></ul></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Gancho de Captación</span>
+              <span class="text-xs font-semibold text-white mt-0.5 block">$30 Gratis en Registro (s/depósito)</span>
+            </div>
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Canal de Conversión</span>
+              <span class="text-xs font-semibold text-orange-400 mt-0.5 block">Descarga App & Web Directa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ECUABET (PASIÓN VALE ORO - B2C) -->
+      <div class="competitor-card glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-2 group" data-category="ecuabet">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-yellow-500/10 rounded-full blur-2xl group-hover:bg-yellow-500/20 transition-all"></div>
+        
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+            <h3 class="text-xl font-bold text-white font-display">Ecuabet (B2C)</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 font-medium">Mayor Volumen Banners</span>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl mb-6 border border-gray-800 group-hover:border-yellow-500/30 transition-all cursor-pointer" onclick="openModal('imagenes_comprimidas_webp/Ecuabet_tu_pasion_vale_oro-compressed.webp', 'Ecuabet Tu Pasión Vale Oro - B2C')">
+          <img src="imagenes_comprimidas_webp/Ecuabet_tu_pasion_vale_oro-compressed.webp" alt="Ecuabet B2C Meta Ads" class="w-full h-56 object-cover object-top transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-80"></div>
+          <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+            <span class="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1">
+              <i class="fa-solid fa-magnifying-glass-plus text-yellow-400"></i> Click para zoom
+            </span>
+            <span class="text-gray-300 bg-black/60 px-2 py-1 rounded-lg">~150 anuncios activos</span>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-xs uppercase tracking-wider font-bold text-yellow-400 mb-2 flex items-center gap-1.5">
+              <i class="fa-solid fa-dice text-yellow-400"></i> Estética Casino Neón & Fórmulas Simples
+            </h4>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              Banners saturados de luces neón, <strong>ruletas 3D generadas por IA</strong> y tipografías extra-bold que ocupan el 40% del arte. Eliminan tecnicismos de rollover con fórmulas aritméticas simples: <em>"Depositas $10 y recibes $40"</em>.
+            </p><div class="gpt-additions"><span>Aporte complementario · GPT</span><ul><li>La pauta se describe como Always On.</li><li>Además de los banners, combina piezas breves de motion graphics; la lectura GPT cita Facebook, Instagram y Audience Network.</li></ul></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Gancho de Entrada</span>
+              <span class="text-xs font-semibold text-white mt-0.5 block">Triplica Recarga (300%) + Giros</span>
+            </div>
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Red de Pauta</span>
+              <span class="text-xs font-semibold text-yellow-400 mt-0.5 block">Audience Network + Feed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. RECARGAS ECUABET (B2B) -->
+      <div class="competitor-card glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-2 group" data-category="ecuabet">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+        
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+            <h3 class="text-xl font-bold text-white font-display">Ecuabet B2B (Recargas)</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-medium">Reclutamiento de Red</span>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl mb-6 border border-gray-800 group-hover:border-emerald-500/30 transition-all cursor-pointer" onclick="openModal('imagenes_comprimidas_webp/recargas_ecuabet-compressed.webp', 'Recargas y Retiros Ecuabet - B2B')">
+          <img src="imagenes_comprimidas_webp/recargas_ecuabet-compressed.webp" alt="Recargas Ecuabet Meta Ads" class="w-full h-56 object-cover object-top transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-80"></div>
+          <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+            <span class="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1">
+              <i class="fa-solid fa-magnifying-glass-plus text-emerald-400"></i> Click para zoom
+            </span>
+            <span class="text-gray-300 bg-black/60 px-2 py-1 rounded-lg">Campaña de Microempresarios</span>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-xs uppercase tracking-wider font-bold text-emerald-400 mb-2 flex items-center gap-1.5">
+              <i class="fa-solid fa-hand-holding-dollar"></i> Ataque Directo al Dolor Fiscal
+            </h4>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              No le hablan al apostador, le hablan al <strong>dueño de minimarkets, cybers y farmacias</strong>. Su propuesta única de valor comercial es: <em>"Nosotros asumimos tus retenciones, cobra tu comisión al 100% + IVA"</em>. Banners infográficos estilo flyer.
+            </p><div class="gpt-additions"><span>Aporte complementario · GPT</span><ul><li>GPT destaca que la cuenta B2B se mantiene separada de la comunicación a jugadores.</li><li>El anuncio organiza la propuesta como problema y solución, y reduce fricción con contacto directo por WhatsApp Business.</li></ul></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Conversión</span>
+              <span class="text-xs font-semibold text-emerald-400 mt-0.5 block">Chat Directo a WhatsApp</span>
+            </div>
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Formato</span>
+              <span class="text-xs font-semibold text-white mt-0.5 block">Banners 1:1 de Alto Contraste</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. LATRIBET EC -->
+      <div class="competitor-card glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-2 group" data-category="latribet">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-sky-500/10 rounded-full blur-2xl group-hover:bg-sky-500/20 transition-all"></div>
+        
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 rounded-full bg-sky-400"></span>
+            <h3 class="text-xl font-bold text-white font-display">Latribet Ec</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/30 font-medium">Brand Avatar Único</span>
+        </div>
+
+        <div class="relative overflow-hidden rounded-2xl mb-6 border border-gray-800 group-hover:border-sky-500/30 transition-all cursor-pointer" onclick="openModal('imagenes_comprimidas_webp/Latrivet_ec-compressed.webp', 'Latribet Ec - Biblioteca de Anuncios')">
+          <img src="imagenes_comprimidas_webp/Latrivet_ec-compressed.webp" alt="Latribet Ec Meta Ads" class="w-full h-56 object-cover object-top transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-80"></div>
+          <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+            <span class="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1">
+              <i class="fa-solid fa-magnifying-glass-plus text-sky-400"></i> Click para zoom
+            </span>
+            <span class="text-gray-300 bg-black/60 px-2 py-1 rounded-lg">~14 anuncios en lote</span>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-xs uppercase tracking-wider font-bold text-sky-400 mb-2 flex items-center gap-1.5">
+              <i class="fa-solid fa-user-check"></i> Familiaridad & Jerga Local
+            </h4>
+            <p class="text-sm text-gray-300 leading-relaxed">
+              Estrategia de <strong>una sola modelo ecuatoriana recurrente</strong> en el 100% de los videos. Optimización de rodaje: filman 15 variaciones en una jornada. Uso descarado de modismos nacionales: <em>"Reclama tus 200 latas"</em> ($200 USD).
+            </p><div class="gpt-additions"><span>Aporte complementario · GPT</span><ul><li>Los videos se adaptan a temas deportivos y de casino con producción cotidiana, cercana al lenguaje TikTok.</li></ul></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Duración Videos</span>
+              <span class="text-xs font-semibold text-white mt-0.5 block">9 a 17 segundos (Ultra Corto)</span>
+            </div>
+            <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+              <span class="text-[11px] text-gray-400 block font-medium">Ubicación Clave</span>
+              <span class="text-xs font-semibold text-sky-400 mt-0.5 block">Instagram Reels & Stories</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. BETCRIS (PANORAMA REGIONAL) -->
+      <div class="competitor-card glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-2 group md:col-span-2" data-category="betcris">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-blue-600/10 rounded-full blur-2xl group-hover:bg-blue-600/20 transition-all"></div>
+        
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+            <h3 class="text-xl font-bold text-white font-display">Betcris (Visión Global Latam)</h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30 font-medium">Incentivos Físicos</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-1 relative overflow-hidden rounded-2xl border border-gray-800 group-hover:border-blue-500/30 transition-all cursor-pointer" onclick="openModal('imagenes_comprimidas_webp/betcris-compressed.webp', 'Betcris - Biblioteca de Anuncios')">
+            <img src="imagenes_comprimidas_webp/betcris-compressed.webp" alt="Betcris Meta Ads" class="w-full h-56 object-cover object-top transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-80"></div>
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white">
+              <span class="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1">
+                <i class="fa-solid fa-magnifying-glass-plus text-blue-400"></i> Zoom
+              </span>
+              <span class="text-gray-300 bg-black/60 px-2 py-1 rounded-lg">Filtro: Todos los países</span>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 space-y-4 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs uppercase tracking-wider font-bold text-blue-400 mb-2 flex items-center gap-1.5">
+                <i class="fa-solid fa-motorcycle text-blue-400"></i> Recompensa Tangible vs. Crédito Digital
+              </h4>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Betcris pauta fuertemente sorteos de bienes tangibles (como <strong>motocicletas Génesis Klik 150</strong>) o tecnología. Sin embargo, al pautar desde cuentas corporativas regionales con el filtro global "Todos", existe una <strong>desconexión de ofertas</strong> que muchas veces no aplican puntualmente a la regulación o premios en Ecuador.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+                <span class="text-[11px] text-gray-400 block font-medium">Lección</span>
+                <span class="text-xs font-semibold text-white mt-0.5 block">Sorteo tangible supera a créditos abstractos</span>
+              </div>
+              <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+                <span class="text-[11px] text-gray-400 block font-medium">Riesgo</span>
+                <span class="text-xs font-semibold text-rose-400 mt-0.5 block">Falta de tropicalización ecuatoriana</span>
+              </div>
+              <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800">
+                <span class="text-[11px] text-gray-400 block font-medium">Estructura</span>
+                <span class="text-xs font-semibold text-blue-400 mt-0.5 block">Banners carrusel de 2 tarjetas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  <div class="glass-card rounded-2xl p-5 sm:p-6 mt-6 border border-sky-500/20">
+  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+    <div><span class="text-[11px] uppercase tracking-wider font-bold text-sky-300">Contexto de mercado · consulta puntual</span><h3 class="text-lg font-bold text-white mt-1">bet365 y 1xBet</h3></div>
+    <span class="text-xs px-3 py-1 rounded-full bg-sky-500/10 text-sky-200 border border-sky-500/20">Sin pauta local identificada en esa revisión</span>
+  </div>
+  <ul class="gpt-market-list mt-4"><li>GPT no identificó anuncios activos desde cuentas locales de Ecuador en la búsqueda descrita.</li><li>El informe relaciona su presencia con SEO, afiliados y patrocinios; el resultado no prueba que estén ausentes de toda pauta o cuenta.</li></ul>
+</div></section>
+
+  <!-- Benchmark Comparison Matrix Table -->
+  <section id="matriz" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 overflow-hidden">
+      <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <span class="text-xs uppercase tracking-wider font-bold text-indigo-400">Matriz de Rendimiento</span>
+          <h3 class="text-2xl font-bold text-white font-display">Competencia Directa vs. Nuestra Pauta</h3>
+        </div>
+        <span class="text-xs text-gray-400 bg-gray-800/80 px-3 py-1.5 rounded-xl border border-gray-700">
+          <i class="fa-solid fa-arrows-rotate text-indigo-400 mr-1"></i> Actualizado según evidencia visual
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-gray-800 text-xs uppercase tracking-wider text-gray-400">
+              <th class="py-4 px-4 font-semibold">Criterio Estratégico</th>
+              <th class="py-4 px-4 font-semibold text-orange-400">Betano Ecuador</th>
+              <th class="py-4 px-4 font-semibold text-yellow-400">Ecuabet (B2C)</th>
+              <th class="py-4 px-4 font-semibold text-sky-400">Latribet Ec</th>
+              <th class="py-4 px-4 font-semibold text-pink-400 bg-pink-500/10 rounded-t-xl border-x border-pink-500/30">Nuestra Marca (AstroBet)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-800/60 text-gray-300">
+            <tr class="hover:bg-gray-800/30 transition-colors">
+              <td class="py-4 px-4 font-medium text-white flex items-center gap-2">
+                <i class="fa-solid fa-film text-gray-400"></i> Formato Predominante
+              </td>
+              <td class="py-4 px-4">Video UGC Vertical (85%)</td>
+              <td class="py-4 px-4">Banner Estático 3D (60%)</td>
+              <td class="py-4 px-4">Video Vertical TikTok (100%)</td>
+              <td class="py-4 px-4 font-semibold text-white bg-pink-500/5 border-x border-pink-500/20">
+                <span class="text-amber-400"><i class="fa-solid fa-circle-exclamation mr-1"></i> 80% Banners Estáticos</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-800/30 transition-colors">
+              <td class="py-4 px-4 font-medium text-white flex items-center gap-2">
+                <i class="fa-solid fa-users text-gray-400"></i> Gestión de Talentos
+              </td>
+              <td class="py-4 px-4">Actores con polos naranja</td>
+              <td class="py-4 px-4">Renders 3D e IA + Atletas</td>
+              <td class="py-4 px-4">Brand Avatar Único (1 Chica)</td>
+              <td class="py-4 px-4 font-semibold text-white bg-pink-500/5 border-x border-pink-500/20">
+                Modelo estática en banner 2D
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-800/30 transition-colors">
+              <td class="py-4 px-4 font-medium text-white flex items-center gap-2">
+                <i class="fa-solid fa-tag text-gray-400"></i> Gancho de Entrada
+              </td>
+              <td class="py-4 px-4 font-semibold text-white">$30 Gratis Sin Depósito</td>
+              <td class="py-4 px-4 font-semibold text-white">Triplica 300% ($10 $
+ightarrow$ $40)</td>
+              <td class="py-4 px-4 font-semibold text-white">Hasta 200 Latas ($200 USD)</td>
+              <td class="py-4 px-4 font-semibold text-white bg-pink-500/5 border-x border-pink-500/20">
+                <span class="text-emerald-400">500% + 30 Giros (Poco explotado)</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-800/30 transition-colors">
+              <td class="py-4 px-4 font-medium text-white flex items-center gap-2">
+                <i class="fa-solid fa-rotate text-gray-400"></i> Frecuencia de Pauta
+              </td>
+              <td class="py-4 px-4">Ráfagas de temporada (Pulsos)</td>
+              <td class="py-4 px-4">Always-On continuo</td>
+              <td class="py-4 px-4">Lotes por temática</td>
+              <td class="py-4 px-4 font-semibold text-white bg-pink-500/5 border-x border-pink-500/20">
+                <span class="text-rose-400">Bajo volumen (~7 anuncios)</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-gray-800/30 transition-colors">
+              <td class="py-4 px-4 font-medium text-white flex items-center gap-2">
+                <i class="fa-solid fa-shop text-gray-400"></i> Estrategia B2B (Agencias)
+              </td>
+              <td class="py-4 px-4 text-gray-500">No evidente en Meta</td>
+              <td class="py-4 px-4 text-emerald-400 font-semibold">Sub-cuenta activa a WhatsApp</td>
+              <td class="py-4 px-4">Red por Telegram</td>
+              <td class="py-4 px-4 font-semibold text-white bg-pink-500/5 border-x border-pink-500/20 rounded-b-xl">
+                Mezclado en cuenta principal
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery / Screenshots Evidence Section -->
+  <section id="hallazgos" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+  <div class="glass-card rounded-3xl p-7 sm:p-10 relative overflow-hidden border border-indigo-500/25">
+    <div class="max-w-3xl mb-9">
+      <span class="text-xs uppercase tracking-wider font-bold text-indigo-300">Hallazgos estratégicos</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mt-2">Lo que la pauta de la competencia nos enseña</h2>
+      <p class="text-sm text-gray-400 mt-3">Estos hallazgos son interpretaciones del material visible en la Biblioteca de Anuncios. Son hipótesis estratégicas para probar, no conclusiones de rendimiento.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <article class="finding-card"><span>HALLAZGO 01</span><h3>El video pone rostro al producto</h3><p>Betano y Latribet utilizan personas reales y formatos verticales. La modelo que AstroBet ya tiene en sus banners podría convertirse en un activo recurrente para Reels, Stories y piezas demostrativas.</p></article>
+      <article class="finding-card"><span>HALLAZGO 02</span><h3>El estático sigue teniendo un rol</h3><p>Ecuabet combina banners de alto impacto con motion graphics. No se trata de reemplazar todos los estáticos, sino de darles una función clara dentro de un mix creativo más amplio.</p></article>
+      <article class="finding-card"><span>HALLAZGO 03</span><h3>Una promoción debe entenderse rápido</h3><p>Los competidores llevan el beneficio a una cifra o ejemplo sencillo. AstroBet puede revisar la jerarquía visual y la explicación de sus promociones, siempre con condiciones visibles y sin inducir a error.</p></article>
+      <article class="finding-card"><span>HALLAZGO 04</span><h3>B2C y B2B son conversaciones distintas</h3><p>Ecuabet utiliza una cuenta y un mensaje específico para reclutar comercios. AstroBet puede ordenar la captación de agentes en una línea separada, con un destino y una calificación propios.</p></article>
+    </div>
+    <div class="mix-panel mt-8">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-5"><div><span class="text-xs uppercase tracking-wider font-bold text-pink-300">Mix creativo observado</span><h3 class="text-xl font-bold text-white mt-1">El contraste de formatos entre marcas</h3></div><span class="text-[11px] text-gray-500">Estimaciones del material analizado</span></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="mix-item"><div><span>Betano</span><strong>80–85%</strong></div><small>video vertical</small><div class="mix-track"><i style="width:83%"></i></div></div>
+        <div class="mix-item"><div><span>Ecuabet</span><strong>60%</strong></div><small>estáticos</small><div class="mix-track"><i style="width:60%"></i></div></div>
+        <div class="mix-item"><div><span>Latribet</span><strong>100%</strong></div><small>video corto</small><div class="mix-track"><i style="width:100%"></i></div></div>
+        <div class="mix-item"><div><span>AstroBet</span><strong>80%</strong></div><small>estáticos</small><div class="mix-track"><i style="width:80%"></i></div></div>
+      </div>
+      <p class="text-xs text-gray-500 mt-4">Porcentajes aproximados consignados en el análisis de las piezas observadas; no son datos de inversión ni resultados.</p>
+    </div>
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="finding-note"><strong>De la lectura a la prueba</strong><p>Registrar concepto, formato, fecha de activación y resultado propio de cada variante. Rotar según el aprendizaje y los datos de AstroBet, no solo por el volumen visible de la competencia.</p></div>
+      <div class="finding-note amber"><strong>Discrepancia de volumen</strong><p>Gemini reporta cerca de 80 anuncios activos para Betano; GPT cita alrededor de 23 en una lectura y ~80 en otra. Los conteos dependen de fecha, filtros y cuenta consultada.</p></div>
+    </div>
+  </div>
+</section>
+<section id="evidencias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+  <div class="text-center max-w-2xl mx-auto mb-10">
+    <span class="text-xs uppercase tracking-wider font-bold text-pink-400">Evidencias gráficas</span>
+    <h2 class="text-3xl font-extrabold text-white font-display mt-1">Biblioteca de capturas Meta Ads</h2>
+    <p class="text-sm text-gray-400 mt-2">Abre cada captura para recorrerla completa y revisar los detalles visibles del anuncio.</p>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <button type="button" class="gallery-card glass-card rounded-2xl p-3 text-left group" data-image="imagenes_comprimidas_webp/betano_ecuador-compressed.webp" data-title="Betano Ecuador" aria-label="Ampliar captura: Betano Ecuador">
+      <div class="gallery-frame overflow-hidden rounded-xl h-56 border border-gray-800 relative bg-gray-950">
+        <img src="imagenes_comprimidas_webp/betano_ecuador-compressed.webp" alt="Captura de Betano Ecuador" loading="lazy" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]">
+        <div class="gallery-shade absolute inset-0"></div>
+        <span class="gallery-badge orange">Betano Ecuador</span>
+        <span class="gallery-zoom">Ampliar captura ↗</span>
+      </div>
+      <div class="px-2 pt-3 pb-1"><div class="font-semibold text-sm text-white">Betano Ecuador</div><div class="text-xs text-gray-400 mt-1">Video · Deportes · App</div></div>
+    </button>
+<button type="button" class="gallery-card glass-card rounded-2xl p-3 text-left group" data-image="imagenes_comprimidas_webp/Ecuabet_tu_pasion_vale_oro-compressed.webp" data-title="Ecuabet B2C" aria-label="Ampliar captura: Ecuabet B2C">
+      <div class="gallery-frame overflow-hidden rounded-xl h-56 border border-gray-800 relative bg-gray-950">
+        <img src="imagenes_comprimidas_webp/Ecuabet_tu_pasion_vale_oro-compressed.webp" alt="Captura de Ecuabet B2C" loading="lazy" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]">
+        <div class="gallery-shade absolute inset-0"></div>
+        <span class="gallery-badge yellow">Ecuabet B2C</span>
+        <span class="gallery-zoom">Ampliar captura ↗</span>
+      </div>
+      <div class="px-2 pt-3 pb-1"><div class="font-semibold text-sm text-white">Ecuabet B2C</div><div class="text-xs text-gray-400 mt-1">Casino · Deportes · Promociones</div></div>
+    </button>
+<button type="button" class="gallery-card glass-card rounded-2xl p-3 text-left group" data-image="imagenes_comprimidas_webp/recargas_ecuabet-compressed.webp" data-title="Ecuabet B2B · Recargas" aria-label="Ampliar captura: Ecuabet B2B · Recargas">
+      <div class="gallery-frame overflow-hidden rounded-xl h-56 border border-gray-800 relative bg-gray-950">
+        <img src="imagenes_comprimidas_webp/recargas_ecuabet-compressed.webp" alt="Captura de Ecuabet B2B · Recargas" loading="lazy" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]">
+        <div class="gallery-shade absolute inset-0"></div>
+        <span class="gallery-badge emerald">Ecuabet B2B · Recargas</span>
+        <span class="gallery-zoom">Ampliar captura ↗</span>
+      </div>
+      <div class="px-2 pt-3 pb-1"><div class="font-semibold text-sm text-white">Ecuabet B2B · Recargas</div><div class="text-xs text-gray-400 mt-1">Comercios · Captación de agentes</div></div>
+    </button>
+<button type="button" class="gallery-card glass-card rounded-2xl p-3 text-left group" data-image="imagenes_comprimidas_webp/Latrivet_ec-compressed.webp" data-title="Latribet EC" aria-label="Ampliar captura: Latribet EC">
+      <div class="gallery-frame overflow-hidden rounded-xl h-56 border border-gray-800 relative bg-gray-950">
+        <img src="imagenes_comprimidas_webp/Latrivet_ec-compressed.webp" alt="Captura de Latribet EC" loading="lazy" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]">
+        <div class="gallery-shade absolute inset-0"></div>
+        <span class="gallery-badge sky">Latribet EC</span>
+        <span class="gallery-zoom">Ampliar captura ↗</span>
+      </div>
+      <div class="px-2 pt-3 pb-1"><div class="font-semibold text-sm text-white">Latribet EC</div><div class="text-xs text-gray-400 mt-1">UGC · Talento recurrente · Ecuador</div></div>
+    </button>
+<button type="button" class="gallery-card glass-card rounded-2xl p-3 text-left group" data-image="imagenes_comprimidas_webp/betcris-compressed.webp" data-title="Betcris · Regional" aria-label="Ampliar captura: Betcris · Regional">
+      <div class="gallery-frame overflow-hidden rounded-xl h-56 border border-gray-800 relative bg-gray-950">
+        <img src="imagenes_comprimidas_webp/betcris-compressed.webp" alt="Captura de Betcris · Regional" loading="lazy" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]">
+        <div class="gallery-shade absolute inset-0"></div>
+        <span class="gallery-badge blue">Betcris · Regional</span>
+        <span class="gallery-zoom">Ampliar captura ↗</span>
+      </div>
+      <div class="px-2 pt-3 pb-1"><div class="font-semibold text-sm text-white">Betcris · Regional</div><div class="text-xs text-gray-400 mt-1">Campaña regional · Premio tangible</div></div>
+    </button>
+  </div>
+</section>
+
+  <!-- Strategic Action Plan / Recommendations Section -->
+  <section id="recomendaciones" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+    <div class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden border border-indigo-500/30">
+      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-3xl mb-10">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-rocket"></i> Plan de Acción Inmediato
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mt-2">
+          Hoja de Ruta Estratégica para Nuestra Pauta
+        </h2>
+        <p class="text-sm sm:text-base text-gray-400 mt-2">
+          Cómo aprovechar las debilidades de la competencia y rentabilizar cada dólar invertido en Meta Ads en Ecuador.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Step 1 -->
+        <div class="bg-gray-900/80 rounded-2xl p-6 border border-gray-800 hover:border-indigo-500/40 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition-transform">
+            01
+          </div>
+          <h4 class="text-base font-bold text-white font-display mb-2">Crear el "Brand Avatar" en Video</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            Pasar de imágenes estáticas a contratar a un talento ecuatoriano fijo para grabar <strong>15 a 20 videos verticales de 9 a 15 segundos</strong>. Disparar CTRs en Reels y Stories aplicando la fórmula orgánica de Latribet.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-gray-900/80 rounded-2xl p-6 border border-gray-800 hover:border-pink-500/40 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition-transform">
+            02
+          </div>
+          <h4 class="text-base font-bold text-white font-display mb-2">Aterrizar el Bono Matemático</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            Dejar de promocionar el "500%" de forma abstracta. Rediseñar los copies con la fórmula de Ecuabet: <strong>"Cargas $10 y juegas con $60 + 30 Giros Gratis"</strong>. Menos fricción mental = mayor tasa de registro.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-gray-900/80 rounded-2xl p-6 border border-gray-800 hover:border-emerald-500/40 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition-transform">
+            03
+          </div>
+          <h4 class="text-base font-bold text-white font-display mb-2">Separar B2B a WhatsApp Directo</h4>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            No mezclar la captación de agentes con los jugadores. Crear una línea publicitaria exclusiva dirigida a barberías, cybers y tiendas con el mensaje: <strong>"Sin retenciones + 100% IVA"</strong> directo a chat de WhatsApp.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Action Button / Export -->
+      <div class="mt-10 pt-8 border-t border-gray-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <span class="text-xs text-gray-500">
+          <i class="fa-solid fa-shield-halved mr-1"></i> Documento preparado para despliegue en GitHub Pages
+        </span>
+        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-print"></i> Imprimir / Guardar como PDF
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-800/60 py-10 bg-[#0B0F19]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-chart-pie text-indigo-400"></i>
+        <span>Informe de Inteligencia Competitiva Meta Ads &copy; 2026</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Fuente: Meta Ad Library Ecuador</span>
+        <span>•</span>
+        <span>Ubicación: Mosquera / Ecuador Market</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="evidence-lightbox" id="evidenceLightbox" role="dialog" aria-modal="true" aria-label="Captura ampliada">
+  <div class="lightbox-head"><div><strong id="evidenceTitle">Captura de Meta Ads</strong><small>Desplázate para recorrer la captura completa · Esc para cerrar</small></div><button type="button" id="closeEvidence" aria-label="Cerrar">×</button></div>
+  <img id="evidenceImage" alt="Captura ampliada de la Biblioteca de Anuncios">
+</div>
+<script>
+(() => {
+  const box = document.getElementById('evidenceLightbox');
+  const image = document.getElementById('evidenceImage');
+  const title = document.getElementById('evidenceTitle');
+  const close = () => { box.classList.remove('open'); document.body.style.overflow = ''; image.removeAttribute('src'); };
+  window.openModal = (src, label) => {
+    image.src = src; title.textContent = label;
+    box.classList.add('open'); box.scrollTop = 0; document.body.style.overflow = 'hidden';
+  };
+  document.querySelectorAll('.gallery-card').forEach(card => card.addEventListener('click', () => {
+    window.openModal(card.dataset.image, card.dataset.title);
+  }));
+  document.getElementById('closeEvidence').addEventListener('click', close);
+  box.addEventListener('click', event => { if (event.target === box) close(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && box.classList.contains('open')) close(); });
+})();
+</script>
+
+<script>
+window.filterCards = function(category, button) {
+  const cards = document.querySelectorAll('.competitor-card');
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(btn => btn.classList.remove('bg-indigo-600', 'text-white'));
+  buttons.forEach(btn => btn.classList.add('bg-gray-800/80', 'text-gray-300'));
+  const active = button || (window.event && window.event.currentTarget);
+  if (active) {
+    active.classList.remove('bg-gray-800/80', 'text-gray-300');
+    active.classList.add('bg-indigo-600', 'text-white');
+  }
+  cards.forEach(card => {
+    card.style.display = category === 'all' || card.getAttribute('data-category') === category ? 'block' : 'none';
+  });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.Chart) return;
+  const formatCanvas = document.getElementById('chartFormatos');
+  const hookCanvas = document.getElementById('chartGanchos');
+  if (!formatCanvas || !hookCanvas) return;
+
+  new Chart(formatCanvas.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Video Vertical (UGC/Reels)', 'Banners Estáticos (IA/3D)', 'Carruseles / B2B'],
+      datasets: [{
+        data: [65, 25, 10],
+        backgroundColor: ['#6366f1', '#ec4899', '#38bdf8'],
+        borderColor: '#0B0F19', borderWidth: 4, hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { color: '#9ca3af', font: { family: '"Plus Jakarta Sans"', size: 11 }, padding: 16 } } },
+      cutout: '70%'
+    }
+  });
+
+  new Chart(hookCanvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Multiplicador Saldo', 'Giros Casino Gratis', 'Sin Depósito ($30)', 'Sorteos Físicos (Moto)', 'B2B Cero Retenciones'],
+      datasets: [{
+        label: 'Presencia en Copies', data: [88, 75, 60, 45, 55],
+        backgroundColor: ['rgba(99,102,241,.85)', 'rgba(236,72,153,.85)', 'rgba(245,158,11,.85)', 'rgba(56,189,248,.85)', 'rgba(16,185,129,.85)'],
+        borderRadius: 8, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#9ca3af', font: { family: '"Plus Jakarta Sans"', size: 10 } }, grid: { display: false } },
+        y: { ticks: { color: '#9ca3af', font: { family: '"Plus Jakarta Sans"', size: 10 } }, grid: { color: 'rgba(255,255,255,.05)' } }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
